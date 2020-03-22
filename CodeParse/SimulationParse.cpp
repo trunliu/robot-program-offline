@@ -32,15 +32,18 @@ const  double moveLineinter = 5;
          timelist[i] = TIMELIST - i - 1;
      speedRate = CommonFun::ReadSettingsInt("Para/speedRate");
  }
+
  SimulationParse::~SimulationParse()
 {
    CommonFun::WriteSettingsInt("Para/speedRate",speedRate);     //在析构时保存文件名到ini文件
 }
+
 void SimulationParse::closeEvent(QCloseEvent * e)
 {
     IsStop = true; //关闭时能够从循环中跳出来
     return OpenglWidget::closeEvent(e);
 }
+
 void SimulationParse::readFile(const QString &fname)
 {
 
@@ -50,18 +53,20 @@ void SimulationParse::readFile(const QString &fname)
          throw ERR_sfileopenfalse;
         }
 }
-//
+
+//模型运动,不断调用OpenGLWidget的重绘函数
 void SimulationParse::moto_runJAbs(Joint j, Coint c,bool flag,double sp)
 {
-    double j1,j2,j3,j4,j5,j6,c1,c2;  //这个要走的角度
-    //gl目前的角度和需要转动角度的差距
-    if(glType == Lanxun5JointRobot)
-    {
-         j1 = j.j1 * 180 / PI - j1Rot;  //角度值
-         j2 = j.j2 * 180 / PI - j2Rot;
-    }
-    else
-    {
+    //真正要走的角度
+    double j1,j2,j3,j4,j5,j6,c1,c2;
+
+    //gl目前的角度和需要转动角度的变化量
+    if(glType == Lanxun5JointRobot){
+        //关节机器人是角度值
+        j1 = j.j1 * 180 / PI - j1Rot;
+        j2 = j.j2 * 180 / PI - j2Rot;
+    }else{
+        //坐标机器人是位移值
         j1 = j.j1 - j1Rot;
         j2 = j.j2 - j2Rot;
     }
@@ -70,16 +75,18 @@ void SimulationParse::moto_runJAbs(Joint j, Coint c,bool flag,double sp)
     j5 = j.j5 * 180 / PI - j5Rot;
     j6 = j.j6 * 180 / PI;
 
+    //变位机构的变化量
     c1 = c.c1 * 180 / PI - c1Rot;
     c2 = c.c2 * 180 / PI - c2Rot;
+
+    //
     double contia = sqrt(j1 * j1 + j2 * j2 + j3 * j3 + j4 * j4 + j5 * j5 + j6 * j6 + c1 * c1 + c2 * c2);
-    if(contia == 0)
-    {
-        return;
-    }
+    //模型没变化
+    if(!contia)return;
+
     double rate = 1.0 / contia * moveJointInter;
-    for(double i = 0; i < contia; i+= moveJointInter) //每次转一度
-    {
+    //每次转一度
+    for(double i = 0; i < contia; i+= moveJointInter){
         j1Rot += j1 * rate;
         j2Rot += j2 * rate;
         j3Rot += j3 * rate;
@@ -90,13 +97,10 @@ void SimulationParse::moto_runJAbs(Joint j, Coint c,bool flag,double sp)
         c2Rot += c2 * rate;
         ArrayXd xyzrpw = ArrayXd::Zero(6);
         Joint curJ;
-        if(glType == Lanxun5JointRobot)
-        {
+        if(glType == Lanxun5JointRobot){
              curJ.j1 = j1Rot * PI / 180.0;
              curJ.j2 = j2Rot * PI / 180.0;
-        }
-        else
-        {
+        }else{
             curJ.j1 = j1Rot;
             curJ.j2 = j2Rot;
         }
@@ -105,13 +109,15 @@ void SimulationParse::moto_runJAbs(Joint j, Coint c,bool flag,double sp)
         curJ.j5 = j5Rot * PI / 180;
         curJ.j6 = 0;
         xyzrpw = pose_2_xyzrpw(NewScaraArgorithmn::fksolution(curJ));
+
         for(int i = 0;i < 6;i++)
             coord[i] = CommonFun::round(xyzrpw[i],2);
        if(flag)
-       addTrialPoints();
+            addTrialPoints();
        else
-       decTrialPoints();
+            decTrialPoints();
        updateGL();
+
        sendJC();
        if(IsStop)
            return;
@@ -376,35 +382,31 @@ bool SimulationParse::ParserSentenceback(const QString &sentence,const QString &
      if(content.size() < 1)//.GetSize()改size();
      throw ERR_fileempty;
  }
+
 //边解析边运动
- //解析直线要注意 1.插补直线去进行 保证xyz在一条直线上
-  bool SimulationParse::ParserLine(const QVector<QString> &words,CodeTypeEnum code,bool flag)
-  {
+//解析直线要注意 1.插补直线去进行 保证xyz在一条直线上 flag是否插补
+//解析焊接文件（以及转换为绝对坐标）
+bool SimulationParse::ParserLine(const QVector<QString> &words,CodeTypeEnum code,bool flag){
       wchar_t pre;
       double val;
       Coint c = {0,0};
       double speed = 3000;
       ArrayXd xyzrpw = ArrayXd::Zero(6);
-      if(isFireMode)
-      {
-          if(isFireLine)  //就是插补去做
-             linecolor = Qt::red;
-          else
-             linecolor = Qt::white;
+
+      //查看模式
+      if(isFireMode){
+          linecolor=(isFireLine) ? Qt::red : Qt::white;
+      }else{
+          //如果是插补线，设绿色
+          linecolor=(code == INTERPOLATION_LINE) ? Qt::green : Qt::white;
       }
-      else
-      {
-           if(code == INTERPOLATION_LINE)
-               linecolor = Qt::green;
-           else
-               linecolor = Qt::white;
-      }
-      for(int i = 1; i < words.length(); i ++)
-      {
-          if(!ParserDouble(words[i],pre,val))
+
+      //解析一行的每一个单词，提取数据至xyzrpw数组中
+      for(int i = 1; i < words.length(); i ++){
+          if(!ParserDouble(words[i],pre,val)){
               return false;
-          switch (pre)
-          {
+          }
+          switch (pre){
                 case 'X':  xyzrpw[0] = val;  break;
                 case 'Y':  xyzrpw[1] = val;  break;
                 case 'Z':  xyzrpw[2] = val;  break;
@@ -421,18 +423,24 @@ bool SimulationParse::ParserSentenceback(const QString &sentence,const QString &
           }
       }
 
-      if(code == INTERPOLATION_LINE)
-      getLineDividePoint(xyzrpw,c,flag);
-      else
-      {
-       Matrix4d mat = Matrix4d::Identity();
-       mat = xyzrpw_2_pose(xyzrpw);
-       Joint j = NewScaraArgorithmn::NewPositionJointssolution(mat);
-       moto_runJAbs(j,c,flag,0);
-       currentXyzrpw = xyzrpw;  //空移线这个是没问题的
+      //如果是插补线
+      if(code == INTERPOLATION_LINE){
+          //直线插补和姿态插补
+          getLineDividePoint(xyzrpw,c,flag);
+      }else{//如果是空移线
+          Matrix4d poseMatrix = Matrix4d::Identity();
+          //xyz+欧拉角==>位姿矩阵
+          poseMatrix = xyzrpw_2_pose(xyzrpw);
+          //逆解
+          Joint j = NewScaraArgorithmn::NewPositionJointssolution(poseMatrix);
+          //移动
+          moto_runJAbs(j,c,flag,0);
+          //记录当前欧拉角
+          currentXyzrpw = xyzrpw;  //空移线这个是没问题的
       }
       return true;
 }
+
 bool SimulationParse::ParserArcBack(const QVector<QString>&words,const QVector<QString>&words1,const CodeTypeEnum &code)
 {
     wchar_t pre;

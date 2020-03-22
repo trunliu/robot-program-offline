@@ -60,8 +60,10 @@ OpenglWidget::OpenglWidget(RobotType type)
      wpxTrans = 0;
      wpyTrans = 0;
      wpzTrans = 0;
+
      j1Rot = j2Rot = j4Rot = j3Rot = j5Rot = j6Rot = 0;
      c1Rot = c2Rot = 0;      //变位机构
+
      light = true;           //光照开启
      zoom = -10;             //zoom透过深度为10
      linecolor = Qt::white;  //空移线的颜色
@@ -511,6 +513,7 @@ void OpenglWidget::drawFloor()
          }
 }
 
+//坐标机器人的绘制
 void OpenglWidget::drawLanxunCoordRobot()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -537,8 +540,8 @@ void OpenglWidget::drawLanxunCoordRobot()
     drawFloor();
      for(int i = 0; i < num; i++)
      {
-      switch(i)
-      {
+      switch(i){
+           //j1~j3与关节机器人不同,是位移值,j4~j5才是角度值
            case 0: glTranslatef( 0.0, j2Rot / scaleNum, 0.0 ); break; //往Z轴方向移动吧
            case 1: glTranslatef( j1Rot / scaleNum,0.0,  0.0 ); break;
            case 2: glTranslatef( 0.0,  0.0, j3Rot / scaleNum);

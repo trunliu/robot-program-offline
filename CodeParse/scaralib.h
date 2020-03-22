@@ -154,9 +154,9 @@ Matrix4d ch_Ofk(Coint c);
 Matrix4d ch_iik(Matrix4d matrix, Coint c);
 
 
-//位姿矩阵转化为xyz坐标和欧拉角
+//位姿矩阵转化为==>xyz坐标和欧拉角
 ArrayXd pose_2_xyzrpw(Matrix4d H);
-//xyz坐标和欧拉角转换为位姿矩阵
+//xyz坐标和欧拉角转换为==>位姿矩阵
 Matrix4d xyzrpw_2_pose(ArrayXd xyzrpw);
 
 

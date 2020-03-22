@@ -41,13 +41,12 @@ Matrix4d NewScaraArgorithmn::fksolution(Joint j)
 Joint NewScaraArgorithmn::NewPositionJointssolution(Matrix4d Matrix)
 {
     Matrix4d temp = Matrix4d::Zero();
-    if(Parameter::robotType == LanxunCoordRobot)
-    {
+    //坐标机器人逆解
+    if(Parameter::robotType == LanxunCoordRobot){
       temp = Matrix * coordTCFmatrix.inverse();
       return coo_ik(temp);
-    }
-    else if(Parameter::robotType == Lanxun5JointRobot)
-    {
+    //关节机器人逆解
+    }else if(Parameter::robotType == Lanxun5JointRobot){
        temp = Matrix * lanxun5JointTCFmatrix.inverse();
       return NewPositionJoints(temp);
     }
