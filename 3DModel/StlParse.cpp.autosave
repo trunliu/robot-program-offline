@@ -1,0 +1,6 @@
+#include "STLView.h"
+
+STLView::STLView()
+{
+
+}

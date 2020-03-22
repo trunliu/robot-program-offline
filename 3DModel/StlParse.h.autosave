@@ -1,0 +1,12 @@
+#ifndef STLPARSE_H
+#define STLPARSE_H
+#include "CommonFun/Common.h"
+class STLView
+{
+public:
+    STLView();
+    static STLView * [robotNum];
+  
+};
+
+#endif // STLPARSE_H

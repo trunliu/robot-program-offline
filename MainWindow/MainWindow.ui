@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1400</width>
+    <height>1000</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LXRobot</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/icon.ico</normaloff>:/icon.ico</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="toolTipDuration">
+   <number>-1</number>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(113, 113, 113);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QToolButton" name="editText_button">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>编辑</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="graph_button">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>图库</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="teach_button">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+</string>
+        </property>
+        <property name="text">
+         <string>示教</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="alignment_button">
+        <property name="styleSheet">
+         <string notr="true">border-color: rgb(0, 0, 255);</string>
+        </property>
+        <property name="text">
+         <string>联调</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="compile_button">
+        <property name="text">
+         <string>编译</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="simulation_button">
+        <property name="text">
+         <string>仿真</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="styleSheet">
+       <string notr="true">selection-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page"/>
+      <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1400</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 217, 208);
+selection-background-color: rgb(0, 146, 255);
+
+</string>
+   </property>
+   <widget class="QMenu" name="textMenu">
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>文本(T)</string>
+    </property>
+    <addaction name="boldAct"/>
+    <addaction name="colorAct"/>
+    <addaction name="fontAct"/>
+    <addaction name="fileSwitchAct"/>
+   </widget>
+   <widget class="QMenu" name="fileMenu">
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>文件(F)</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
+    <addaction name="newAct"/>
+    <addaction name="openAct"/>
+    <addaction name="saveAct"/>
+    <addaction name="saveAsAct"/>
+    <addaction name="paraAct"/>
+    <addaction name="printAct"/>
+    <addaction name="exitAct"/>
+   </widget>
+   <widget class="QMenu" name="simulationMenu">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>仿真</string>
+    </property>
+    <addaction name="playAct"/>
+    <addaction name="pauseAct"/>
+    <addaction name="backAct"/>
+    <addaction name="resetAct"/>
+    <addaction name="modelSwitchAct"/>
+    <addaction name="reduceAct"/>
+    <addaction name="addAct"/>
+   </widget>
+   <widget class="QMenu" name="viewMenu">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>视图</string>
+    </property>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>隐藏</string>
+     </property>
+     <addaction name="hideRobotAct"/>
+     <addaction name="hideLineAct"/>
+    </widget>
+    <widget class="QMenu" name="rotateMeu">
+     <property name="title">
+      <string>旋转</string>
+     </property>
+     <addaction name="rotate_Xa"/>
+     <addaction name="rotate_Xd"/>
+     <addaction name="rotate_Ya"/>
+     <addaction name="rotate_Yd"/>
+    </widget>
+    <addaction name="reductionAct"/>
+    <addaction name="amplificationAct"/>
+    <addaction name="narrowdownAct"/>
+    <addaction name="rotateMeu"/>
+    <addaction name="menu_5"/>
+   </widget>
+   <widget class="QMenu" name="menu_7">
+    <property name="title">
+     <string>示教</string>
+    </property>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>示教器</string>
+     </property>
+     <addaction name="entityTeachAct"/>
+    </widget>
+    <addaction name="menu"/>
+    <addaction name="load_workPiece"/>
+    <addaction name="action_4"/>
+   </widget>
+   <widget class="QMenu" name="menu_8">
+    <property name="title">
+     <string>联调</string>
+    </property>
+    <addaction name="connectAct"/>
+    <addaction name="clearTrials"/>
+    <addaction name="analyAct"/>
+   </widget>
+   <widget class="QMenu" name="menu_9">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+   </widget>
+   <addaction name="fileMenu"/>
+   <addaction name="textMenu"/>
+   <addaction name="simulationMenu"/>
+   <addaction name="viewMenu"/>
+   <addaction name="menu_7"/>
+   <addaction name="menu_8"/>
+   <addaction name="menu_9"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 217, 208);
+selection-background-color: rgb(0, 146, 255);</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="newAct"/>
+   <addaction name="openAct"/>
+   <addaction name="saveAsAct"/>
+   <addaction name="saveAct"/>
+   <addaction name="paraAct"/>
+   <addaction name="printAct"/>
+   <addaction name="separator"/>
+   <addaction name="boldAct"/>
+   <addaction name="fileSwitchAct"/>
+   <addaction name="separator"/>
+   <addaction name="modelSwitchAct"/>
+   <addaction name="backAct"/>
+   <addaction name="pauseAct"/>
+   <addaction name="playAct"/>
+   <addaction name="resetAct"/>
+   <addaction name="reduceAct"/>
+   <addaction name="addAct"/>
+   <addaction name="separator"/>
+   <addaction name="reductionAct"/>
+   <addaction name="amplificationAct"/>
+   <addaction name="narrowdownAct"/>
+   <addaction name="hideRobotAct"/>
+   <addaction name="hideLineAct"/>
+   <addaction name="separator"/>
+   <addaction name="connectAct"/>
+   <addaction name="clearTrials"/>
+   <addaction name="analyAct"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="whatsThis">
+    <string>文件名</string>
+   </property>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(240, 240, 240);</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="newAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>新建</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="priority">
+    <enum>QAction::NormalPriority</enum>
+   </property>
+  </action>
+  <action name="openAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>打开</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="saveAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>保存</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="saveAsAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/saveAs.png</normaloff>:/images/saveAs.png</iconset>
+   </property>
+   <property name="text">
+    <string>另存为</string>
+   </property>
+  </action>
+  <action name="printAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
+   </property>
+   <property name="text">
+    <string>打印</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="exitAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </action>
+  <action name="boldAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/bold.png</normaloff>:/images/bold.png</iconset>
+   </property>
+   <property name="text">
+    <string>粗体</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="colorAct">
+   <property name="text">
+    <string>颜色</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="fontAct">
+   <property name="text">
+    <string>字体</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="playAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/play.png</normaloff>:/images/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>播放</string>
+   </property>
+  </action>
+  <action name="pauseAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>暂停</string>
+   </property>
+  </action>
+  <action name="backAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/back.png</normaloff>:/images/back.png</iconset>
+   </property>
+   <property name="text">
+    <string>后退</string>
+   </property>
+  </action>
+  <action name="resetAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/reset.png</normaloff>:/images/reset.png</iconset>
+   </property>
+   <property name="text">
+    <string>重置</string>
+   </property>
+  </action>
+  <action name="reductionAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/reduction.png</normaloff>:/images/reduction.png</iconset>
+   </property>
+   <property name="text">
+    <string>还原</string>
+   </property>
+  </action>
+  <action name="amplificationAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/amplification.png</normaloff>:/images/amplification.png</iconset>
+   </property>
+   <property name="text">
+    <string>放大</string>
+   </property>
+  </action>
+  <action name="narrowdownAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/NarrowDown.png</normaloff>:/images/NarrowDown.png</iconset>
+   </property>
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="hideRobotAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/hideRobot.png</normaloff>:/images/hideRobot.png</iconset>
+   </property>
+   <property name="text">
+    <string>隐藏机器人</string>
+   </property>
+  </action>
+  <action name="modelSwitchAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/modeSwitch.png</normaloff>:/images/modeSwitch.png</iconset>
+   </property>
+   <property name="text">
+    <string>模式切换</string>
+   </property>
+  </action>
+  <action name="fileSwitchAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/fileSwitch.png</normaloff>:/images/fileSwitch.png</iconset>
+   </property>
+   <property name="text">
+    <string>切换代码</string>
+   </property>
+  </action>
+  <action name="addAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+   </property>
+   <property name="text">
+    <string>加速</string>
+   </property>
+  </action>
+  <action name="reduceAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/reduce.png</normaloff>:/images/reduce.png</iconset>
+   </property>
+   <property name="text">
+    <string>减速</string>
+   </property>
+  </action>
+  <action name="rotate_Xa">
+   <property name="text">
+    <string>绕X+</string>
+   </property>
+  </action>
+  <action name="rotate_Xd">
+   <property name="text">
+    <string>绕X-</string>
+   </property>
+  </action>
+  <action name="rotate_Ya">
+   <property name="text">
+    <string>绕Y+</string>
+   </property>
+  </action>
+  <action name="rotate_Yd">
+   <property name="text">
+    <string>绕Y-</string>
+   </property>
+  </action>
+  <action name="paraAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/parameter.png</normaloff>:/images/parameter.png</iconset>
+   </property>
+   <property name="text">
+    <string>参数</string>
+   </property>
+  </action>
+  <action name="connectAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/connect.png</normaloff>:/images/connect.png</iconset>
+   </property>
+   <property name="text">
+    <string>连接</string>
+   </property>
+  </action>
+  <action name="clearTrials">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/clearTrials.png</normaloff>:/images/clearTrials.png</iconset>
+   </property>
+   <property name="text">
+    <string>清除轨迹</string>
+   </property>
+  </action>
+  <action name="hideLineAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/hideLine.png</normaloff>:/images/hideLine.png</iconset>
+   </property>
+   <property name="text">
+    <string>隐藏空移线</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>连接机器人</string>
+   </property>
+  </action>
+  <action name="load_workPiece">
+   <property name="text">
+    <string>导入工件</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>移除工件</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>断开连接</string>
+   </property>
+  </action>
+  <action name="entityTeachAct">
+   <property name="text">
+    <string>实体示教器</string>
+   </property>
+  </action>
+  <action name="analyAct">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/speedAna.png</normaloff>:/images/speedAna.png</iconset>
+   </property>
+   <property name="text">
+    <string>速度分析</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
