@@ -14,6 +14,7 @@
 enum Mode
 {
     FireMode,   //焊接模式
+
     ShowMode,   //演示模式
     NoMode
 };

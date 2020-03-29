@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "GCodeConversion.h"
 #include "3DModel/OpenGLWidget.h"
-#include "NewScaraArgorithmn.h"
+//#include "NewScaraArgorithmn.h"
 #include <QList>
 #include <QVector>
 #include <QPushButton>
